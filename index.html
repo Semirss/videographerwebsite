@@ -313,6 +313,34 @@
                 height: 70vh;
             }
         }
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        
+        .mobile-menu.open {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Ensure the mobile menu appears below the header */
+        header {
+            z-index: 100;
+        }
+        
+        .mobile-menu {
+            z-index: 90;
+        }
+        
+        /* Close button styling */
+        .close-btn {
+            transition: transform 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
     </style>
 </head>
 <body class="bg-black text-white font-dancing">
@@ -327,7 +355,7 @@
                 <path d="M 50 5 L 75 95 L 25 95 Z" fill="none" stroke="currentColor" stroke-width="3" transform="rotate(45 50 50)"></path>
                 <path d="M 50 5 L 75 95 L 25 95 Z" fill="none" stroke="currentColor" stroke-width="3" transform="rotate(225 50 50)"></path>
             </svg>
-            <span class="text-lg md:text-lg font-semibold tracking-wide">DANIEL RUSSO</span>
+            <span class="text-lg md:text-lg font-semibold tracking-wide text-white">DANIEL RUSSO</span>
         </div>
 
         <!-- Desktop Navigation Links -->
@@ -341,12 +369,34 @@
         </nav>
 
         <!-- Mobile Menu Toggle -->
-        <button id="mobile-menu-btn" class="md:hidden">
+        <button id="mobile-menu-btn" class="md:hidden text-white">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
     </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-black bg-opacity-90 backdrop-blur-md pt-20 px-6">
+        <button id="close-menu-btn" class="absolute top-5 right-5 text-white close-btn">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        
+        <nav class="flex flex-col space-y-8 mt-10 text-center">
+            <a href="#" class="text-2xl font-medium text-white hover:text-gray-300 py-2">NARRATIVE</a>
+            <a href="#" class="text-2xl font-medium text-white hover:text-gray-300 py-2">COMMERCIAL</a>
+            <a href="#" class="text-2xl font-medium text-white hover:text-gray-300 py-2">MUSIC-VIDEOS</a>
+            <a href="#" class="text-2xl font-medium text-white hover:text-gray-300 py-2">BIO</a>
+            <a href="#" class="text-2xl font-medium text-white hover:text-gray-300 py-2">GEAR</a>
+            <a href="#" class="text-2xl font-medium text-white hover:text-gray-300 py-2">CONTACT</a>
+        </nav>
+        
+  
+    </div>
+
+    
 
     <!-- Video Section (not full background) -->
     <section class="video-section">
@@ -531,7 +581,36 @@
                 ]
             }
         ];
-
+ // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        }
+        
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = ''; // Re-enable scrolling
+        }
+        
+        mobileMenuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        
+        // Close menu when clicking on a link
+        const navLinks = mobileMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        // Close menu when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                closeMenu();
+            }
+        });
         const carouselContainer = document.querySelector('.carousel-container');
         const nextBtn = document.getElementById('next-btn');
         const prevBtn = document.getElementById('prev-btn');
