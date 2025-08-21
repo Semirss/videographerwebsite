@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Russo</title>
+    <!-- Use Inter font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Font Awesome for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Define a custom color for the button to match the image -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'wix-gold': '#9a8a74',
+                    },
+                },
+            },
+        };
+    </script>
+    
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .carousel-item {
+            min-width: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        /* Style for the play button */
+        .play-button {
+            transition: transform 0.2s ease-in-out;
+        }
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #d1d5db !important;
+        }
+        /* Modal styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            padding: 0;
+            width: 95%;
+            max-width: 1200px;
+            height: auto;
+            max-height: 90vh;
+            z-index: 1001;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-direction: row;
+                height: 70vh;
+            }
+        }
+        /* Custom golden color */
+        .text-golden {
+            color: #d1b08b;
+        }
+        /* Video section styling */
+        .video-section {
+            height: 80vh;
+            min-height: 600px;
+            position: relative;
+            margin-top: 80px; /* Space below navigation */
+        }
+        /* Ensure content is above video background */
+        .content-layer {
+            position: relative;
+            z-index: 20;
+        }
+          .video-section {
+            height: 100vh;
+            min-height: 800px;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .video-carousel-item {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 10;
+        }
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 15;
+        }
+        .video-section-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 20;
+        }
+        .play-button {
+            transition: transform 0.2s ease-in-out;
+        }
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            z-index: 25;
+            transition: background 0.3s ease;
+        }
+        .carousel-nav:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .carousel-prev {
+            left: 1rem;
+        }
+        .carousel-next {
+            right: 1rem;
+        }
+        /* Modal styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            padding: 0;
+            width: 95%;
+            max-width: 1200px;
+            height: auto;
+            max-height: 90vh;
+            z-index: 1001;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-direction: row;
+                height: 70vh;
+            }
+        }
+           .video-section {
+            height: 85vh;
+            min-height: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+        .video-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .video-carousel-item {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 10;
+        }
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 15;
+        }
+        .video-section-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 20;
+        }
+        .play-button {
+            transition: transform 0.2s ease-in-out;
+        }
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 25;
+            transition: background 0.3s ease;
+        }
+        .carousel-nav:hover {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .carousel-prev {
+            left: 1rem;
+        }
+        .carousel-next {
+            right: 1rem;
+        }
+        /* Modal styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000;
+            padding: 0;
+            width: 95%;
+            max-width: 1200px;
+            height: auto;
+            max-height: 90vh;
+            z-index: 1001;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        @media (min-width: 768px) {
+            .modal-content {
+                flex-direction: row;
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-dancing">
+
+    <!-- Header and Navigation -->
+    <header class="fixed top-0 left-0 right-0 p-4 md:p-4 flex justify-between items-center z-50 bg-black bg-opacity-70 backdrop-blur-sm">
+        <!-- Logo/Brand -->
+        <div class="flex items-center space-x-2">
+            <!-- SVG for the logo -->
+            <svg class="w-8 h-8 md:w-5 md:h-5 text-white" viewBox="0 0 100 100" fill="currentColor">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="3"></circle>
+                <path d="M 50 5 L 75 95 L 25 95 Z" fill="none" stroke="currentColor" stroke-width="3" transform="rotate(45 50 50)"></path>
+                <path d="M 50 5 L 75 95 L 25 95 Z" fill="none" stroke="currentColor" stroke-width="3" transform="rotate(225 50 50)"></path>
+            </svg>
+            <span class="text-lg md:text-lg font-semibold tracking-wide">DANIEL RUSSO</span>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs ">
+            <a href="#" class="nav-link text-white hover:text-gray-300">NARRATIVE</a>
+            <a href="#" class="nav-link text-white hover:text-gray-300">COMMERCIAL</a>
+            <a href="#" class="nav-link text-white hover:text-gray-300">MUSIC-VIDEOS</a>
+            <a href="#" class="nav-link text-white hover:text-gray-300">BIO</a>
+            <a href="#" class="nav-link text-white hover:text-gray-300">GEAR</a>
+            <a href="#" class="nav-link text-white hover:text-gray-300">CONTACT</a>
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="md:hidden">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Video Section (not full background) -->
+    <section class="video-section">
+        <!-- Carousel Video Container -->
+        <div id="video-carousel" class="w-full h-full">
+            <div class="carousel-container h-full">
+
+                <!-- Video slides will be dynamically added via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Main Content Area centered vertically -->
+        <div class=" absolute inset-0 flex flex-col items-center justify-center text-center ">
+
+            <h1 id="dynamic-title" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-widest mb-8 md:mb- px-4"></h1>
+            
+            <div class="z-50"><!-- Play Video Button with original SVG -->
+            <button id="play-video-btn" class="play-button flex items-center justify-center space-x-2 rounded-full text-white hover:text-gray-300 transition-all duration-300  md:mb-20 z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 border border-white rounded-full " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+                <span class="text-sm text-gray-200 font-light  ">Play Video</span>
+            </button>
+            </div>
+        </div>
+        
+        <!-- "All Videos" button at the bottom and centered -->
+        <div class="content-layer absolute bottom-10 left-1/2 -translate-x-1/2 z-50">
+            <button id="all-videos-btn" class="flex items-center justify-center space-x-2 border-2 border-white px-8 py-3 rounded-md text-white hover:bg-white hover:text-black transition-all duration-300">
+                <span class="text-sm font-light">All Videos</span>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Carousel Navigation Arrows -->
+        <div class="content-layer absolute inset-y-0 w-full flex items-center justify-between px-4 md:px-8 ">
+            <button id="prev-btn" class="bg-black bg-opacity-0 p-4 rounded-full hover:bg-opacity-50 transition-all z-50">
+                <svg class="w-6 h-6 text-white transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+            <button id="next-btn" class="bg-black bg-opacity-0 p-4 rounded-full hover:bg-opacity-50 transition-all z-50">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </section>
+    
+    <!-- Video Player Modal -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-white text-3xl font-bold p-2 hover:text-gray-300 z-50">&times;</button>
+            
+            <!-- Video Section -->
+            <div class="md:w-3/5 relative">
+                <video id="modal-video" class="w-full h-full object-cover" controls>
+                    <!-- Source element will be dynamically added -->
+                </video>
+            </div>
+            
+            <!-- Details Section -->
+            <div class="md:w-2/5 p-4 md:p-8 flex flex-col justify-start text-left overflow-y-auto">
+               
+                <h1 id="modal-title" class="text-2xl md:text-4xl font-light tracking-widest uppercase mb-2"></h1>
+                <p id="modal-details" class="text-xs md:text-sm italic text-gray-400 mb-4 md:mb-6"></p>
+                <p id="modal-description" class="text-white italic mb-6 md:mb-8 text-xs md:text-sm leading-relaxed"></p>
+                
+                <div id="modal-cast-crew" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About section -->
+    <div class="bg-black flex items-center justify-center py-16 md:py-24 px-4 md:px-16 lg:px-24 relative z-30">
+        <div class="max-w-4xl w-full">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-normal mb-2">Daniel Russo</h1>
+            <h2 class="text-lg sm:text-xl md:text-2xl font-medium mb-6">Cinematographer, Filmmaker, Storyteller</h2>
+            <p class="font-light text-sm sm:text-base md:text-lg italic max-w-xl mb-4">
+                I'm a paragraph. Click here to add your own text and edit me. It's easy. Just click "Edit Text" or double click me to add your own content and make changes to the font.
+            </p>
+            <a href="#" class="flex items-center text-xs sm:text-sm md:text-base font-medium hover:text-gray-400 transition-colors duration-300">
+                Read More
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 md:h-4 md:w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="bg-white text-black py-16 md:py-24 relative z-30">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <!-- Narrative Column -->
+                <div class="flex flex-col items-center">
+                    <!-- Camera Icon (SVG) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 md:h-12 md:w-12 text-golden mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 21.5V11.5M16 16.5H8M17 19H7a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4zM20 7h2M20 17h2M4 7H2M4 17H2M12 9a2 2 1 1 0 0 4 2 2 0 0 0 0-4z"/>
+                    </svg>
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Narrative</h3>
+                    <p class="text-gray-600 italic text-sm md:text-base">I'm a paragraph. Click here to add your own text and edit me.</p>
+                </div>
+
+                <!-- Commercial Column -->
+                <div class="flex flex-col items-center">
+                    <!-- TV Icon (SVG) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 md:h-12 md:w-12 text-golden mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 9H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2zM12 21v-3M8 21v-3M16 21v-3M21 9V6a2 2 0 0 0-2-2h-3L13 2H11L8 4H5a2 2 0 0 0-2 2v3M21 9V6a2 2 0 0 0-2-2h-3L13 2H11L8 4H5a2 2 0 0 0-2 2v3M3 9v6"/>
+                    </svg>
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Commercial</h3>
+                    <p class="text-gray-600 italic text-sm md:text-base">I'm a paragraph. Click here to add your own text and edit me.</p>
+                </div>
+
+                <!-- Music Video Column -->
+                <div class="flex flex-col items-center">
+                    <!-- Music Icon (SVG) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 md:h-12 md:w-12 text-golden mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.5 9.5l5 5m0-5l-5 5m5-5v3m-5-3v3m5-2h-3m-2 0h-3"/>
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 5V2M19 12h3M12 19v3M5 12H2"/>
+                    </svg>
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Music Video</h3>
+                    <p class="text-gray-600 italic text-sm md:text-base">I'm a paragraph. Click here to add your own text and edit me.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const videos = [
+            {
+                url: "./videos/100899-video-720.mp4",
+                title: "ANDROMEDA",
+                details: "Daniel Russo • Romance • 00:29",
+                description: "This is a great space to update your audience with a description of your video. Include information like what the video is about, who produced it, where it was filmed, and why it's a must-see for viewers. Remember this is a showcase for your professional work, so be sure to use intriguing language that engages viewers and invites them to sit back and enjoy.",
+                cast: [
+                    { role: "Cast 1", name: "Jack Doe" },
+                    { role: "Cast 2", name: "Jenny Doe" },
+                    { role: "Cast 3", name: "Jack Doe" },
+                    { role: "Cast 4", name: "Jenny Doe" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "producer", name: "Jane Doe" },
+                    { role: "production-designer", name: "John Doe" }
+                ]
+            },
+            {
+                url: "./videos/mixkit-slowly-approaching-a-clock-on-a-black-background-28897-hd-ready.mp4",
+                title: "RC CARS",
+                details: "Daniel Russo • Action • 00:35",
+                description: "A thrilling video showcasing the latest RC cars in action. Watch as these miniature vehicles race through obstacles and perform high-speed stunts. Perfect for enthusiasts and thrill-seekers alike.",
+                cast: [
+                    { role: "Driver", name: "Alex Smith" },
+                    { role: "Mechanic", name: "Mike Johnson" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "editor", name: "Emily White" }
+                ]
+            },
+            {
+                url: "./videos//mixkit-sunset-behind-the-skyline-on-the-beach-over-the-sea-51445-hd-ready.mp4",
+                title: "WAVE RIDER",
+                details: "Daniel Russo • Sports • 00:40",
+                description: "Experience the adrenaline of riding the perfect wave. This video captures breathtaking moments from the world's best surf spots, featuring stunning cinematography and heart-stopping action.",
+                cast: [
+                    { role: "Surfer", name: "Kelly Slater" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "producer", name: "John Doe" },
+                    { role: "music", name: "Chris Brown" }
+                ]
+            }
+        ];
+
+        const carouselContainer = document.querySelector('.carousel-container');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const playVideoBtn = document.getElementById('play-video-btn');
+        const allVideosBtn = document.getElementById('all-videos-btn');
+        const dynamicTitle = document.getElementById('dynamic-title');
+
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalVideo = document.getElementById('modal-video');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDetails = document.getElementById('modal-details');
+        const modalDescription = document.getElementById('modal-description');
+        const modalCastCrew = document.getElementById('modal-cast-crew');
+
+        let currentIndex = 0;
+
+        // Function to dynamically create and append video elements
+        const setupCarousel = () => {
+            videos.forEach((video, index) => {
+                const videoDiv = document.createElement('div');
+                videoDiv.className = `carousel-item relative h-full`;
+                
+                const videoElement = document.createElement('video');
+                videoElement.id = `video${index + 1}`;
+                videoElement.className = 'w-full h-full object-cover';
+                videoElement.setAttribute('muted', '');
+                videoElement.setAttribute('loop', '');
+                videoElement.setAttribute('playsinline', '');
+                videoElement.setAttribute('autoplay', index === 0 ? '' : 'false');
+
+                const sourceElement = document.createElement('source');
+                sourceElement.src = video.url;
+                sourceElement.type = 'video/mp4';
+
+                videoElement.appendChild(sourceElement);
+
+                const overlayDiv = document.createElement('div');
+                overlayDiv.className = 'absolute inset-0 bg-black opacity-30';
+
+                videoDiv.appendChild(videoElement);
+                videoDiv.appendChild(overlayDiv);
+                carouselContainer.appendChild(videoDiv);
+            });
+        };
+
+        // Function to move the carousel and update content
+        const updateContent = () => {
+            const offset = -currentIndex * 100;
+            carouselContainer.style.transform = `translateX(${offset}%)`;
+
+            // Update title
+            dynamicTitle.textContent = videos[currentIndex].title;
+
+            // Pause all videos and play only the current one
+            document.querySelectorAll('.carousel-item video').forEach((video, index) => {
+                if (index === currentIndex) {
+                    video.play().catch(error => console.warn("Autoplay was prevented:", error));
+                } else {
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+        };
+
+        // Function to populate and show the modal
+        function showModal() {
+            const currentVideo = videos[currentIndex];
+            modalVideo.src = currentVideo.url;
+            modalVideo.load();
+            
+            modalTitle.textContent = currentVideo.title;
+            modalDetails.textContent = currentVideo.details;
+            modalDescription.textContent = currentVideo.description;
+            
+            modalCastCrew.innerHTML = '';
+            const allRoles = [...currentVideo.cast, ...currentVideo.crew];
+            allRoles.forEach(person => {
+                const roleElement = document.createElement('div');
+                roleElement.className = 'font-bold uppercase';
+                roleElement.textContent = person.role;
+
+                const nameElement = document.createElement('div');
+                nameElement.className = 'text-gray-400';
+                nameElement.textContent = person.name;
+
+                modalCastCrew.appendChild(roleElement);
+                modalCastCrew.appendChild(nameElement);
+            });
+
+            modalOverlay.style.display = 'block';
+            document.querySelectorAll('.carousel-item video')[currentIndex].pause();
+            
+            // Play the modal video when it's ready
+            modalVideo.oncanplay = () => {
+                modalVideo.play().catch(error => console.warn("Modal video playback failed:", error));
+            };
+            
+            // Prevent body scrolling when modal is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to hide the modal
+        function hideModal() {
+            modalOverlay.style.display = 'none';
+            modalVideo.pause();
+            document.querySelectorAll('.carousel-item video')[currentIndex].play();
+            
+            // Re-enable body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % videos.length;
+            updateContent();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+            updateContent();
+        });
+
+        // Event listener for the play button
+        playVideoBtn.addEventListener('click', () => {
+            showModal();
+        });
+
+        // Event listener for the all videos button
+        allVideosBtn.addEventListener('click', () => {
+            showModal();
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            hideModal();
+        });
+        
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                hideModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'block') {
+                hideModal();
+            }
+        });
+
+        // Initialize the carousel on page load
+        window.onload = () => {
+            setupCarousel();
+            updateContent();
+        };
+    </script>
+<!--middle-->
+ 
+    <!-- Video Section 1 -->
+    <section class="video-section" id="section-1">
+        <div class="video-carousel" id="carousel-1">
+            <!-- Carousel items will be dynamically added via JavaScript -->
+        </div>
+        
+        <!-- Carousel Navigation -->
+        <button class="carousel-nav carousel-prev" data-carousel="1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <button class="carousel-nav carousel-next" data-carousel="1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+        
+        <div class="video-section-content">
+            <h3 id="section-1-author" class="text-xs md:text-sm font-light text-white opacity-80 mb-1 tracking-widest uppercase"></h3>
+            <h1 id="section-1-title" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-widest mb-8 md:mb-16 px-4"></h1>
+            
+            <button class="play-button flex items-center justify-center space-x-2 rounded-full text-white hover:text-gray-300 transition-all duration-300 mb-8 md:mb-16 z-50" data-section="1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 border border-white rounded-full " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+                <span class="text-sm font-light">Play Video</span>
+            </button>
+        </div>
+    </section>
+
+ <!-- Video Section 2 -->
+<section class="video-section mt-0" id="section-2">
+    <div class="video-carousel" id="carousel-2">
+        <!-- Carousel items will be dynamically added via JavaScript -->
+    </div>
+    
+    <!-- Carousel Navigation -->
+    <button class="carousel-nav carousel-prev" data-carousel="2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+    <button class="carousel-nav carousel-next" data-carousel="2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+    </button>
+    
+    <div class="video-section-content">
+        <h3 id="section-2-author" class="text-xs md:text-sm font-light text-white opacity-80 mb-1 tracking-widest uppercase"></h3>
+        <h1 id="section-2-title" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-widest mb-8 md:mb-16 px-4"></h1>
+        
+        <button class="play-button flex items-center justify-center space-x-2 rounded-full text-white hover:text-gray-300 transition-all duration-300 mb-8 md:mb-16 z-50" data-section="2">
+             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 border border-white rounded-full " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+                <span class="text-sm font-light">Play Video</span>
+        </button>
+    </div>
+</section>
+
+    <!-- Video Section 3 -->
+    <section class="video-section mt-0" id="section-3">
+        <div class="video-carousel" id="carousel-3">
+            <!-- Carousel items will be dynamically added via JavaScript -->
+        </div>
+        
+        <!-- Carousel Navigation -->
+        <button class="carousel-nav carousel-prev" data-carousel="3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 极狐24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button class="carousel-nav carousel-next" data-carousel="3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w极狐3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+        
+        <div class="video-section-content">
+            <h3 id="section-3-author" class="text-xs md:text-sm font-light text-white opacity-80 mb-1 tracking-widest uppercase"></h3>
+            <h1 id="section-3-title" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-widest mb-8 md:mb-16 px-4"></h1>
+            
+            <button class="play-button flex items-center justify-center space-x-2 rounded-full text-white hover:text-gray-300 transition-all duration-300 mb-8 md:mb-16 z-50" data-section="3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 border border-white rounded-full " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+                <span class="text-sm font-light">Play Video</span>
+            </button>
+        </div>
+    </section>
+    
+    <!-- Video Player Modal -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-white text-3xl font-bold p-2 hover:text-gray-300 z-50">&times;</button>
+            
+            <!-- Video Section -->
+            <div class="md:w-3/5 relative">
+                <video id="modal-video" class="w-full h-full object-cover" controls>
+                    <!-- Source element will be dynamically added -->
+                </video>
+            </div>
+            
+            <!-- Details Section -->
+            <div class="md:w-2/5 p-4 md:p-8 flex flex-col justify-start text-left overflow-y-auto">
+                <h3 id="modal-author" class="text-xs md:text-sm font-light text-gray-400 mb-1 uppercase"></h3>
+                <h1 id="modal-title" class="text-2xl md:text-4xl font-light tracking-widest uppercase mb-2"></h1>
+                <p id="modal-details" class="text-xs md:text-sm italic text-gray-400 mb-4 md:mb-6"></p>
+                <p id="modal-description" class="text-white italic mb-6 md:mb-8 text-xs md:text-sm leading-relaxed"></p>
+                
+                <div id="modal-cast-crew" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
+                    <!-- Cast and crew will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Separate video data for each section
+        const videosData1 = [
+            {
+                url: "./videos/mixkit-sunset-behind-the-skyline-on-the-beach-over-the-sea-51445-hd-ready.mp4",
+                title: "ANDROMEDA",
+                author: "Daniel Russo",
+                details: "Daniel Russo • Romance • 00:29",
+                description: "This is a great space to update your audience with a description of your video. Include information like what the video is about, who produced it, where it was filmed, and why it's a must-see for viewers. Remember this is a showcase for your professional work, so be sure to use intriguing language that engages viewers and invites them to sit back and enjoy.",
+                cast: [
+                    { role: "Cast 1", name: "Jack Doe" },
+                    { role: "Cast 2", name: "Jenny Doe" },
+                    { role: "Cast 3", name: "Jack Doe" },
+                    { role: "Cast 4", name极狐: "Jenny Doe" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "producer", name: "Jane Doe" },
+                    { role: "production-designer", name: "John Doe" }
+                ]
+            },
+            {
+                url: "./videos/100899-video-720.mp4",
+                title: "RC CARS",
+                author: "New Release",
+                details: "Daniel Russo • Action • 00:35",
+                description: "A thrilling video showcasing the latest RC cars in action. Watch as these miniature vehicles race through obstacles and perform high-speed stunts. Perfect for enthusiasts and thrill-seekers alike.",
+                cast: [
+                    { role: "Driver", name: "Alex Smith" },
+                    { role: "Mechanic", name: "Mike Johnson" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "editor", name: "Emily White" }
+                ]
+            },
+            {
+                url: "./videos/mixkit-slowly-approaching-a-clock-on-a-black-background-28897-hd-ready.mp4",
+                title: "WAVE RIDER",
+                author: "Surf Series",
+                details: "Daniel Russo • Sports • 00:40",
+                description: "Experience the adrenaline of riding the perfect wave. This video captures breathtaking moments from the world's best surf spots, featuring stunning cinematography and heart-stopping action.",
+                cast: [
+                    { role: "Surfer", name: "Kelly Slater" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "producer", name: "John Doe" },
+                    { role: "music", name: "Chris Brown" }
+                ]
+            }
+        ];
+
+        const videosData2 = [
+            {
+                url: "./videos/100899-video-720.mp4",
+                title: "URBAN EXPLORER",
+                author: "Adventure Series",
+                details: "Daniel Russo • Adventure • 00:45",
+                description: "Join us as we explore hidden urban landscapes and forgotten places. This video takes you on a journey through abandoned buildings and secret city spots that few have seen.",
+                cast: [
+                    { role: "Explorer", name: "Sarah Connor" },
+                    { role: "Guide", name: "Mike Thompson" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "producer", name: "John Smith" },
+                    { role: "sound-designer", name: "Alex Johnson" }
+                ]
+            },
+            {
+                url: "./videos/mixkit-sunset-behind-the-skyline-on-the-beach-over-the-sea-51445-hd-ready.mp4",
+                title: "OCEAN DEPTHS",
+                author: "Marine Life",
+                details: "Daniel Russo • Documentary • 00:38",
+                description: "Dive into the mysterious world beneath the waves. This documentary showcases the incredible diversity of marine life and the challenges facing our oceans today.",
+                cast: [
+                    { role: "Marine Biologist", name: "Dr. Emily Parker" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "underwater-camera", name: "Steve Rogers" },
+                    { role: "editor", name: "Lisa Brown" }
+                ]
+            },
+            {
+                url: "./videos/mixkit-slowly-approaching-a-clock-on-a-black-background-28897-hd-ready.mp4",
+                title: "TIME LAPSE",
+                author: "Experimental",
+                details: "Daniel Russo • Experimental • 00:52",
+                description: "An artistic exploration of time and space through the lens of time-lapse photography. Watch as cities transform from day to night and seasons change in moments.",
+                cast: [],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "editor", name: "Tom Wilson" },
+                    { role: "colorist", name: "Anna Taylor" }
+                ]
+            }
+        ];
+
+        const videosData3 = [
+            {
+                url: "./videos/mixkit-slowly-approaching-a-clock-on-a-black-background-28897-hd-ready.mp4",
+                title: "NIGHT LIGHTS",
+                author: "Cityscapes",
+                details: "Daniel Russo • Urban • 00:41",
+                description: "Experience the vibrant energy of the city after dark. This video captures the mesmerizing lights and movement of urban landscapes when the sun goes down.",
+                cast: [],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "producer", name: "Robert Davis" },
+                    { role: "gaffer", name: "Michael Chen" }
+                ]
+            },
+            {
+                url: "./videos/mixkit-sunset-behind-the-skyline-on-the-beach-over-the-sea-51445-hd-ready.mp4",
+                title: "MOUNTAIN DREAMS",
+                author: "Wilderness",
+                details: "Daniel Russo • Nature • 00:47",
+                description: "A breathtaking journey through majestic mountain ranges and untouched wilderness. This video showcases the raw beauty of nature at its most grand scale.",
+                cast: [
+                    { role: "Hiker", name: "David Wilson" },
+                    { role: "Guide", name: "Maria Garcia" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "aerial-cinematography", name: "John Taylor" },
+                    { role: "producer", name: "Sarah Miller" }
+                ]
+            },
+            {
+                url: "./videos/100899-video-720.mp4",
+                title: "FAST TRACK",
+                author: "Extreme Sports",
+                details: "Daniel Russo • Sports • 00:33",
+                description: "Get your adrenaline pumping with this high-octane look at extreme sports. From skateboarding to BMX, experience the thrill of pushing physical limits.",
+                cast: [
+                    { role: "Skateboarder", name: "Tony Hawk" },
+                    { role: "BMX Rider", name: "Dave Mirra" }
+                ],
+                crew: [
+                    { role: "director", name: "Jane Doe" },
+                    { role: "cinematographer-dp", name: "Daniel Russo" },
+                    { role: "stunt-coordinator", name: "Mark Johnson" },
+                    { role: "editor", name: "Emily Clark" }
+                ]
+            }
+        ];
+
+        // Initialize carousels with their own data
+        const carouselDataSection1 = { id: 'carousel-1', currentIndex: 0, videos: videosData1 };
+        const carouselDataSection2 = { id: 'carousel-2', currentIndex: 0, videos: videosData2 };
+        const carouselDataSection3 = { id: 'carousel-3', currentIndex: 0, videos: videosData3 };
+
+        // Function to create carousel items
+        function createCarouselItems() {
+            // Create carousel items for section 1
+            const carousel1 = document.getElementById('carousel-1');
+            videosData1.forEach(video => {
+                const item = document.createElement('div');
+                item.className = 'video-carousel-item';
+                item.innerHTML = `
+                    <video class="video-background" muted loop playsinline>
+                        <source src="${video.url}" type="video/mp4">
+                    </video>
+                    <div class="video-overlay"></div>
+                `;
+                carousel1.appendChild(item);
+            });
+
+            // Create carousel items for section 2
+            const carousel2 = document.getElementById('carousel-2');
+            videosData2.forEach(video => {
+                const item = document.createElement('div');
+                item.className = 'video-carousel-item';
+                item.innerHTML = `
+                    <video class="video-background" muted loop playsinline>
+                        <source src="${video.url}" type="video/mp4">
+                    </video>
+                    <div class="video-overlay"></div>
+                `;
+                carousel2.appendChild(item);
+            });
+
+            // Create carousel items for section 3
+            const carousel3 = document.getElementById('carousel-3');
+            videosData3.forEach(video => {
+                const item = document.createElement('div');
+                item.className = 'video-carousel-item';
+                item.innerHTML = `
+                    <video class="video-background" muted loop playsinline>
+                        <source src="${video.url}" type="video/mp4">
+                    </video>
+                    <div class="video-overlay"></div>
+                `;
+                carousel3.appendChild(item);
+            });
+
+            // Set initial titles and authors for each section
+            document.getElementById('section-1-author').textContent = videosData1[0].author;
+            document.getElementById('section-1-title').textContent = videosData1[0].title;
+            document.getElementById('section-2-author').textContent = videosData2[0].author;
+            document.getElementById('section-2-title').textContent = videosData2[0].title;
+            document.getElementById('section-3-author').textContent = videosData3[0].author;
+            document.getElementById('section-3-title').textContent = videosData3[0].title;
+        }
+
+        // Function to update carousel position
+        function updateCarouselPosition(carouselId, index, videos) {
+            const carousel = document.getElementById(carouselId);
+            const offset = -index * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+            
+            // Update the carousel data and section title/author
+            if (carouselId === 'carousel-1') {
+                carouselDataSection1.currentIndex = index;
+                document.getElementById('section-1-author').textContent = videos[index].author;
+                document.getElementById('section-1-title').textContent = videos[index].title;
+            } else if (carouselId === 'carousel-2') {
+                carouselDataSection2.currentIndex = index;
+                document.getElementById('section-2-author').textContent = videos[index].author;
+                document.getElementById('section-2-title').textContent = videos[index].title;
+            } else if (carouselId === 'carousel-3') {
+                carouselDataSection3.currentIndex = index;
+                document.getElementById('section-3-author').textContent = videos[index].author;
+                document.getElementById('section-3-title').textContent = videos[index].title;
+            }
+        }
+
+        // Set up carousel navigation
+        function handleCarouselNavigationSection1() {
+            const carouselId = 'carousel-1';
+            const direction = this.classList.contains('carousel-next') ? 1 : -1;
+            const videos = carouselDataSection1.videos;
+            
+            let newIndex = carouselDataSection1.currentIndex + direction;
+            
+            // Handle wrap-around
+            if (newIndex < 0) {
+                newIndex = videos.length - 1;
+            } else if (newIndex >= videos.length) {
+                newIndex = 0;
+            }
+            
+            updateCarouselPosition(carouselId, newIndex, videos);
+        }
+
+        function handleCarouselNavigationSection2() {
+            const carouselId = 'carousel-2';
+            const direction = this.classList.contains('carousel-next') ? 1 : -1;
+            const videos = carouselDataSection2.videos;
+            
+            let newIndex = carouselDataSection2.currentIndex + direction;
+            
+            // Handle wrap-around
+            if (newIndex < 0) {
+                newIndex = videos.length - 1;
+            } else if (newIndex >= videos.length) {
+                newIndex = 0;
+            }
+            
+            updateCarouselPosition(carouselId, newIndex, videos);
+        }
+
+        function handleCarouselNavigationSection3() {
+            const carouselId = 'carousel-3';
+            const direction = this.classList.contains('carousel-next') ? 1 : -1;
+            const videos = carouselDataSection3.videos;
+            
+            let newIndex = carouselDataSection3.currentIndex + direction;
+            
+            // Handle wrap-around
+            if (newIndex < 0) {
+                newIndex = videos.length - 1;
+            } else if (newIndex >= videos.length) {
+                newIndex = 0;
+            }
+            
+            updateCarouselPosition(carouselId, newIndex, videos);
+        }
+
+        // Modal functionality
+        const modalOverlayElement = document.getElementById('modal-overlay');
+        const modalVideoElement = document.getElementById('modal-video');
+        const closeModalButton = document.getElementById('close-modal-btn');
+        const modalTitleElement = document.getElementById('modal-title');
+        const modalAuthorElement = document.getElementById('modal-author');
+        const modalDetailsElement = document.getElementById('modal-details');
+        const modalDescriptionElement = document.getElementById('modal-description');
+        const modalCastCrewElement = document.getElementById('modal-cast-crew');
+
+        // Function to populate and show the modal
+        function showVideoModal(sectionIndex) {
+            let carouselData;
+            let videos;
+            
+            // Get the correct data based on section number
+            if (sectionIndex === 1) {
+                carouselData = carouselDataSection1;
+                videos = videosData1;
+            } else if (sectionIndex === 2) {
+                carouselData = carouselDataSection2;
+                videos = videosData2;
+            } else if (sectionIndex === 3) {
+                carouselData = carouselDataSection3;
+                videos = videosData3;
+            }
+            
+            const video = videos[carouselData.currentIndex];
+            
+            // Set modal content
+            modalVideoElement.src = video.url;
+            modalVideoElement.load();
+            
+            modalAuthorElement.textContent = video.author;
+            modalTitleElement.textContent = video.title;
+            modalDetailsElement.textContent = video.details;
+            modalDescriptionElement.textContent = video.description;
+            
+            // Populate cast and crew
+            modalCastCrewElement.innerHTML = '';
+            const allRoles = [...video.cast, ...video.crew];
+            allRoles.forEach(person => {
+                const roleElement = document.createElement('div');
+                roleElement.className = 'font-bold uppercase';
+                roleElement.textContent = person.role;
+
+                const nameElement = document.createElement('div');
+                nameElement.className = 'text-gray-400';
+                nameElement.textContent = person.name;
+
+                modalCastCrewElement.appendChild(roleElement);
+                modalCastCrewElement.appendChild(nameElement);
+            });
+
+            modalOverlayElement.style.display = 'block';
+            
+            // Play the modal video when it's ready
+            modalVideoElement.oncanplay = () => {
+                modalVideoElement.play().catch(error => console.warn("Modal video playback failed:", error));
+            };
+            
+            // Prevent body scrolling when modal is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to hide the modal
+        function hideVideoModal() {
+            modalOverlayElement.style.display = 'none';
+            modalVideoElement.pause();
+            
+            // Re-enable body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Initialize the page
+        window.addEventListener('load', () => {
+            // Create carousel items
+            createCarouselItems();
+            
+            // Add event listeners to carousel navigation buttons
+            document.querySelectorAll('[data-carousel="1"]').forEach(button => {
+                button.addEventListener('click', handleCarouselNavigationSection1);
+            });
+
+            document.querySelectorAll('[data-carousel="2"]').forEach(button => {
+                button.addEventListener('click', handleCarouselNavigationSection2);
+            });
+
+            document.querySelectorAll('[data-carousel="3"]').forEach(button => {
+                button.addEventListener('click', handleCarouselNavigationSection3);
+            });
+
+            // Add event listeners to play buttons
+            document.querySelectorAll('.play-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const sectionIndex = parseInt(button.getAttribute('data-section'));
+                    showVideoModal(sectionIndex);
+                });
+            });
+
+            // Play all videos when page loads
+            document.querySelectorAll('.video-background').forEach(video => {
+                video.play().catch(error => console.warn("Video autoplay was prevented:", error));
+            });
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            hideVideoModal();
+        });
+        
+        modalOverlayElement.addEventListener('click', (e) => {
+            if (e.target === modalOverlayElement) {
+                hideVideoModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlayElement.style.display === 'block') {
+                hideVideoModal();
+            }
+        });
+    </script>
+
+
+
+    
+      <!-- The main footer container -->
+    <footer class="bg-black py-16 px-4 md:px-8 lg:px-16 text-left">
+        <!-- Main content area for the footer -->
+        <div class="container  mx-auto max-w-4xl">
+            <!-- Grid layout for the top sections -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-start">
+                <!-- "Contact me" section -->
+                <div class="flex flex-col space-y-4">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-100">Contact me</h2>
+                    <p class="text-xl lg:text-2xl text-gray-300">so we can create creative<br>projects together</p>
+                    <div class="flex items-center space-x-8 text-lg lg:text-xl text-gray-300">
+                        <a href="mailto:info@mysite.com" class="hover:underline transition-colors duration-300">
+                            info@mysite.com
+                        </a>
+                        <span class="text-gray-600">|</span>
+                        <a href="tel:123-456-7890" class="hover:underline transition-colors duration-300">
+                            123-456-7890
+                        </a>
+                    </div>
+                </div>
+
+                <!-- "Join my mailing list" section -->
+                <div class="text-left">
+                    <h3 class="text-lg lg:text-xl font-medium text-gray-100 mb-2 italic">Join my mailing list</h3>
+                    <form class="space-y-4">
+                        <label for="email" class="block text-sm font-medium text-gray-300">Email*</label>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email here"
+                            aria-label="Enter your email"
+                            class="w-full max-w-sm p-2.5 bg-transparent border border-gray-400 text-gray-100 placeholder-gray-500 focus:outline-none focus:border-gray-100 transition-colors duration-300"
+                        />
+                        <label class="flex items-center space-x-2 text-sm text-gray-400 cursor-pointer">
+                            <input type="checkbox" class="accent-wix-gold" />
+                            <span>Yes, subscribe me to your newsletter.</span>
+                        </label>
+                        <button
+                            type="submit"
+                            class="py-2.5 px-10 bg-wix-gold text-white font-semibold hover:bg-opacity-90 transition-colors duration-300"
+                        >
+                            Subscribe Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Horizontal line for separation -->
+            <hr class="border-t border-gray-700 my-16">
+
+            <!-- Social media and copyright section -->
+            <div class="flex flex-col items-start space-y-6">
+                <!-- Social media icons -->
+                <div class="flex space-x-6 text-gray-400 text-lg">
+                    <a href="#" aria-label="Twitter" class="hover:text-wix-gold transition-colors duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Facebook" class="hover:text-wix-gold transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Vimeo" class="hover:text-wix-gold transition-colors duration-300"><i class="fab fa-vimeo"></i></a>
+                    <a href="#" aria-label="Instagram" class="hover:text-wix-gold transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+                </div>
+
+                <!-- Copyright information -->
+                <p class="text-gray-400 text-sm">&copy; 2023 by Daniel Russo. Powered and secured by <a href="#" class="text-gray-400 hover:text-wix-gold transition-colors duration-300">Wix</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
